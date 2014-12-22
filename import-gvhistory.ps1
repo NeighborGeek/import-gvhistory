@@ -11,16 +11,18 @@
    
    This script requires the "HTML Agility Pack", available via NuGet.  The script was written and tested
    with HTML Agility Pack version 1.4.9 For more information, go to http://htmlagilitypack.codeplex.com/
-
+   
+   In order to run this script, you must have at least powershell version 3.0.  If you're running Windows 7,
+   You can update powershell by installing the latest "Windows Management Framework" from microsoft, currently
+   WMF 4.  
+   
    About This Script
    -----------------
    Author: Steve Whitcher
    Web Site: http://www.neighborgeek.net
-   Version: 1.0
-   Date: 12/16/2014
+   Version: 1.01
+   Date: 12/21/2014
    
-
-
 .EXAMPLE
    import-gvhistory -path c:\temp\takeout\voice\calls -agilitypath C:\packages\HtmlAgilityPack.1.4.9\lib\net45
    
@@ -35,21 +37,19 @@
     This command uses the same parameters as Example 1, but then passes the information on be filtered 
     by Where-Object to only include records of Text messages, and not calls.  After filtering, the information
     is saved to c:\temp\TextMessages.csv by passing the output of Where-Object to Export-CSV.  
-
 .EXAMPLE
    import-gvhistory -path c:\temp\takeout\voice\calls | export-csv c:\temp\GVHistory.csv
-
     This command does not include the -agilitypath parameter, so the script will attempt to find 
     and use HTMLAgilityPack.dll in the current working directory. The command will process all call and text
     message information and save it to c:\temp\GVHistory.csv
     
 #>
-
 function import-gvhistory
 {
     [CmdletBinding()]
     [Alias()]
     [OutputType("Selected.System.Management.Automation.PSCustomObject")]
+    #Requires -Version 3.0
     Param
     (
         # Path to the "Calls" directory containing Google Voice data exported from Google Takeout.
